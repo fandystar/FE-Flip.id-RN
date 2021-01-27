@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TransactionList from './pages/TransactionListPage';
 import Detail from './pages/DetailPage';
+import CardComponent from './Components/CardComponent';
 
 
 const  Testing = (props) => {
@@ -32,6 +33,8 @@ const App = () => {
         
         
         <Stack.Screen name="Detail" component={Detail}/>
+        <Stack.Screen name="Card" component={CardComponent}/>
+        
         <Stack.Screen name="Transaction" component={TransactionList}/>
         <Stack.Screen name="Test" component={Testing}/>
        
