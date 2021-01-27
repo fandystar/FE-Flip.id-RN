@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text,Picker ,Button} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import TransactionList from './pages/TransactionListPage';
-import Detail from './pages/DetailPage';
 import CardComponent from './Components/CardComponent';
+import DetailPage from './pages/DetailPage';
+import TransactionListPage from './pages/TransactionListPage';
 
 
 const  Testing = (props) => {
@@ -32,10 +32,10 @@ const App = () => {
       <Stack.Navigator initialRouteName="Test">
         
         
-        <Stack.Screen name="Detail" component={Detail}/>
+        <Stack.Screen name="Detail" component={DetailPage}/>
         <Stack.Screen name="Card" component={CardComponent}/>
         
-        <Stack.Screen name="Transaction" component={TransactionList}/>
+        <Stack.Screen name="Transaction" component={TransactionListPage}/>
         <Stack.Screen name="Test" component={Testing}/>
        
       
