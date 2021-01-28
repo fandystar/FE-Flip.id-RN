@@ -17,32 +17,29 @@ const TransactionListPage = (props) => {
     // fungsi
     const onChangeSearch = query => {
         setSearchQuery(query);
-        if(query == ''){
-            setFilterData(data1);
+        if(query == '') { 
+            setFilterData(data1) 
         } else {
-            const filterData1 = data1.filter( datum => datum.beneficiary_bank.toLowerCase().includes(query.toLowerCase()));
-            const filterData2 = data1.filter( datum => datum.beneficiary_name.toLowerCase().includes(query.toLowerCase()));
-            const filterData3 = data1.filterData1( datum => datum.amount == String(query));
-            // const filterData3 = data1.filter( datum => datum.amount.toLowerCase().includes(query.toLowerCase()));
-            if(filterData1.length > 0) setFilterData(filterData1);            
-            if(filterData2.length > 0) setFilterData(filterData2);            
-            if(filterData3.length > 0) setFilterData(filterData3);    }
-    }
-            // const filterData = data1.filter( datum => datum.beneficiary_name.toLowerCase().includes(query.toLowerCase()));
-            // setFilterData(filterData)
-            // if (filterData.length==0) {
-            //     const filterData = data1.filter( datum => datum.beneficiary_bank.toLowerCase().includes(query.toLowerCase()));
-            //     setFilterData(filterData) }
-            //     else if(filterData.length==0) {
-            //      const filterData = data1.filter( datum => String(datum.amount).toLowerCase().includes(query.toLowerCase()));
-            //    const filterData = data1.filter( datum => datum.amount==='441845')
-            //     setFilterData(filterData);
-            //     console.log('test match number')
-            //     console.log('data filter : ',filterData)
-        
+            //const filterData = data1.filter(datum => datum.amount.toString().includes(query.toString())?datum:null)
+            let filterAmount = data1.filter( datum => String(datum.amount).includes(query))
             
-           
-    
+            let filterName = data1.filter( datum => datum.beneficiary_bank.toLowerCase().includes(query.toLowerCase()))
+            
+            let filterBank =data1.filter( datum => datum.beneficiary_name.toLowerCase().includes(query.toLowerCase()))
+            
+            if (filterName.length != 0 ){
+                setFilterData(filterName)
+                
+            } else if(filterBank.length != 0) {
+                setFilterData(filterBank)
+                
+            } else if(filterAmount.length != 0) {
+                setFilterData(filterAmount)
+                
+            }
+        }    
+            
+    }             
     
     const getData = async() =>{
             const r = await Axios.get('https://nextar.flip.id/frontend-test')
