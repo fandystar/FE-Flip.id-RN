@@ -28,7 +28,7 @@ const DetailPage = (props) => {
         <View >
             <Text>ID TRANSAKSI : #{props.route.params.data.id}</Text>
             <Text style={styles.line}> </Text>
-            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+            <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:5}}>
                 <Text >DETAIL TRANSAKSI</Text>
                 <TouchableOpacity
                     onPress={()=>props.navigation.goBack()}
