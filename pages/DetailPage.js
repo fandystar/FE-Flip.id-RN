@@ -59,10 +59,10 @@ const DetailPage = (props) => {
             
  const styles = StyleSheet.create({
     line : {
-        
+        marginVertical:10,
         width: '100%',
         height: 12,
-        borderBottomWidth :2,
+        borderBottomWidth :0.3,
     }
 }) 
 export default DetailPage

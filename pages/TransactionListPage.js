@@ -118,31 +118,36 @@ const TransactionListPage = (props) => {
     
     const handleRenderItem =({item}) =>{
         return (
-            <View >
-                <TouchableOpacity 
-                    style={{backgroundColor:'lightgrey',justifyContent:'space-evenly',flexDirection:'row',marginTop:10}}
-                    onPress={()=>props.navigation.navigate('Detail',{data:item})}
-                    
-                    >
-                    <View >
-                        <Text>{item.sender_bank}➜{item.beneficiary_bank}</Text>
-                        <Text>{item.beneficiary_name}</Text>
-                        <Text>{currencyFormat(item.amount)}  ·  {dateFormat(item.created_at)}</Text>
-                    </View>
-                    <View>
-                        <Text>{item.status}</Text>
-                    </View>
-                </TouchableOpacity>
+            <View style={{marginHorizontal:10}}>
+                <View style={{borderRadius:5}}>
+                    <TouchableOpacity 
+                        style={{backgroundColor:'white',marginTop:7}}
+                        onPress={()=>props.navigation.navigate('Detail',{data:item})}
+                        
+                        >
+                        <View style={{flexDirection:'row'}}>
+                            <View style={{flex:10,marginHorizontal:20}} >
+                                <Text style={{fontSize:20,fontWeight:'bold'}}>{item.sender_bank} ➜ {item.beneficiary_bank}</Text>
+                                <Text style={{fontSize:20}}>{item.beneficiary_name}</Text>
+                                <Text style={{fontSize:15}}>{currencyFormat(item.amount)} ● {dateFormat(item.created_at)}</Text>
+                            </View>
+                            <View style={{flex:4}}>
+                                <TouchableOpacity style={styles.cssTouchableOpacity}>
+                                    <Text style={styles.cssText}>{item.status}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                                 
-                
+                </View>
             </View>
         )
     }
-    console.log('data 1 :',data1)
+   
     return (
-        <View style={{marginTop:10}}>
+        <View style={{marginTop:10,backgroundColor:'lightgrey'}}>
             <ScrollView>
-            <View style={{position:'relative',zIndex:0}} >
+            <View >
             <View style={{position:'relative',zIndex:0}} >
                     <Searchbar
                         icon={require('../sample/loupe.png')}
@@ -210,7 +215,23 @@ const styles = StyleSheet.create({
         alignItems:'flex-start',
         backgroundColor : '#CAD3C8'
     },
-    
+    cssTouchableOpacity : {
+        borderRadius : 7,
+        height : 30,
+        width : 80 ,
+        alignItems: 'center',
+        justifyContent : 'center',
+        //color :'white',
+        backgroundColor: '#10ac84',
+        marginRight : 4,
+        marginTop : 10,
+        marginBottom: 10,             
+     },
+    cssText : {
+        fontWeight :'bold',
+        color :'white',
+        fontSize: 12, }
+
 })
 
 export default TransactionListPage
