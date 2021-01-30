@@ -8,7 +8,7 @@ const initialState ={
 
 }
     console.log('reducer 1')        
-function UserIdReducers (state=initialState,action) {
+function GetTransansactionsReducers (state=initialState,action) {
     console.log('reducer 2')
     switch (action.type) {
         case types.GET_REQUEST:  
@@ -44,7 +44,7 @@ function UserIdReducers (state=initialState,action) {
         } 
     }
 
-    export default UserIdReducers
+    export default GetTransansactionsReducers
 
 
 

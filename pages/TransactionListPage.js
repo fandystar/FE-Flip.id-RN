@@ -28,27 +28,32 @@ const TransactionListPage = (props) => {
     
     const handleSortData =(value) =>{
         //alert('indek : '+value)
-        if (value==1) {
+        if (value===1) {
+            // A-Z
             let test=data1.sort((a,b)=>(a.beneficiary_name>b.beneficiary_name)? 1 : (b.beneficiary_name>a.beneficiary_name)? -1 :0 )
             SetSortData(test)
-        } else if (value==2) {
+        } else if (value===2) {
+            // Z-A
             let test=data1.sort((a,b)=>(b.beneficiary_name>a.beneficiary_name)? 1 : (a.beneficiary_name>b.beneficiary_name)? -1 :0 )
             SetSortData(test)
-        } else if (value==3) {
+        } else if (value===3) {
+            // newest date
             let newDate = [...data1]
             newDate.sort(function(a, b) {
                 a = new Date(a.created_at)
                 b = new Date(b.created_at)
-                return b>a ? -1 : b<a ? 1 : 0
+                return b>a ? 1 : b<a ? -1 : 0
             });
             SetSortData(newDate)
-        } else if (value==4) {
+        } else if (value === 4) {
+            // oldest date
             let oldDate=[...data1]
             oldDate.sort(function(a, b) {
                 a = new Date(a.created_at)
                 b = new Date(b.created_at)
-                return b>a ? -1 : b<a? 1 : 0
+                return a>b ? 1 : a<b? -1 : 0
             });
+          
             SetSortData(oldDate)
         } else {
             SetSortData(data1)
@@ -120,7 +125,7 @@ const TransactionListPage = (props) => {
                     <View >
                         <Text>{item.sender_bank}➜{item.beneficiary_bank}</Text>
                         <Text>{item.beneficiary_name}</Text>
-                        <Text>{currencyFormat(item.amount)}·{dateFormat(item.created_at)}</Text>
+                        <Text>{currencyFormat(item.amount)}  ·  {dateFormat(item.created_at)}</Text>
                     </View>
                     <View>
                         <Text>{item.status}</Text>
@@ -177,10 +182,6 @@ const TransactionListPage = (props) => {
                 </View>
             </Modal>
             <FlatList            
-                //search ? moviesBySearch : props.route.params ?
-                //props.route.params.movies : moviesByCategory
-
-                //searchQuery.length==0 ? data1 : filterData.length != 0 ? filterData :sortData
                 data={searchQuery? filterData : index==0 ? data1 : sortData}
                 keyExtractor={key=>key.id}
                 renderItem={handleRenderItem}
@@ -205,8 +206,6 @@ const styles = StyleSheet.create({
         borderRadius :10,
         justifyContent:'center',
         alignItems:'flex-start',
-        //borderBottomWidth:2,
-       // padding : 135,
         backgroundColor : '#CAD3C8'
     },
     

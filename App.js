@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text,Picker ,Button} from 'react-native'
+import { View,Button} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CardComponent from './components/CardComponent';
@@ -38,8 +38,7 @@ const App = () => {
         
         <Stack.Screen name="Detail" component={DetailPage}/>
         <Stack.Screen name="Card" component={CardComponent}/>
-        
-        <Stack.Screen name="Transaction" component={TransactionListPage}/>
+         <Stack.Screen name="Transaction" component={TransactionListPage}/>
         <Stack.Screen name="Test" component={Testing}/>
        
       
