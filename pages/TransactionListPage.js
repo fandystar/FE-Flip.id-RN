@@ -10,6 +10,11 @@ import RadioForm from 'react-native-simple-radio-button'
 const TransactionListPage = (props) => {
     const [index,setIndex] = useState(0)
     const[data,setData]=useState([])
+    //const[data1,setData1]=useState([])
+    
+    const[sortData,SetSortData] = useState([])
+    const[type,setType] = useState('')
+    
     const [searchQuery, setSearchQuery] = useState('');
     const [filterData,setFilterData] =useState([])
     const [modalVisible,setModalVisible]=useState(false)
@@ -21,7 +26,34 @@ const TransactionListPage = (props) => {
         {label: 'Tanggal Terlama', value: 4 }
     ];
     
-    
+    const handleSortData =(value) =>{
+        //alert('indek : '+value)
+        if (value==1) {
+            let test=data1.sort((a,b)=>(a.beneficiary_name>b.beneficiary_name)? 1 : (b.beneficiary_name>a.beneficiary_name)? -1 :0 )
+            SetSortData(test)
+        } else if (value==2) {
+            let test=data1.sort((a,b)=>(b.beneficiary_name>a.beneficiary_name)? 1 : (a.beneficiary_name>b.beneficiary_name)? -1 :0 )
+            SetSortData(test)
+        } else if (value==3) {
+            let newDate = [...data1]
+            newDate.sort(function(a, b) {
+                a = new Date(a.created_at)
+                b = new Date(b.created_at)
+                return b>a ? -1 : b<a ? 1 : 0
+            });
+            SetSortData(newDate)
+        } else if (value==4) {
+            let oldDate=[...data1]
+            oldDate.sort(function(a, b) {
+                a = new Date(a.created_at)
+                b = new Date(b.created_at)
+                return b>a ? -1 : b<a? 1 : 0
+            });
+            SetSortData(oldDate)
+        } else {
+            SetSortData(data1)
+        }
+    }
     // fungsi
     const onChangeSearch = query => {
         setSearchQuery(query);
@@ -52,27 +84,30 @@ const TransactionListPage = (props) => {
     const getData = async() =>{
             const r = await Axios.get('https://nextar.flip.id/frontend-test')
             setData(r.data) 
-        
-           
-               
     }    
     
+    //  duplikasi data
+    let data1=[]
+    for ( let id in data) {
+            data1.push((data[id]))
+    } 
     
     useEffect(() => {
         getData()
-        
     }, [])
 
-    //console.log('data flip : ',data)                
-    let data1=[]
-    for ( let id in data) {
-        data1.push((data[id]))
-    } 
-    //console.log('data 1 : ',data1)
-    
-    const currencyFormat = (num) => {
-        return 'Rp ' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    const currencyFormat = (item) => {
+        return 'Rp ' + item.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
     };
+    
+    const dateFormat =(item) =>{
+        let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']
+        let day= item[8]+item[9]
+        let year=item[0]+item[1]+item[2]+item[3]
+        let m= parseInt(item[5]+item[6])-1
+        let month =months[m]
+        return day+' '+month+' '+year    
+    }
     
     const handleRenderItem =({item}) =>{
         return (
@@ -85,7 +120,7 @@ const TransactionListPage = (props) => {
                     <View >
                         <Text>{item.sender_bank}➜{item.beneficiary_bank}</Text>
                         <Text>{item.beneficiary_name}</Text>
-                        <Text>{currencyFormat(item.amount)}·{item.created_at}</Text>
+                        <Text>{currencyFormat(item.amount)}·{dateFormat(item.created_at)}</Text>
                     </View>
                     <View>
                         <Text>{item.status}</Text>
@@ -96,7 +131,7 @@ const TransactionListPage = (props) => {
             </View>
         )
     }
-    
+    console.log('data 1 :',data1)
     return (
         <View style={{marginTop:10}}>
             <ScrollView>
@@ -132,7 +167,9 @@ const TransactionListPage = (props) => {
                             initial={index==0? 0 :radio_props[index.value].value}
                             onPress={(value) => { 
                                                 setIndex({value:value})
+                                                handleSortData(value)
                                                 setModalVisible(!modalVisible)
+                                                    
                                    }}           
                     />            
                    
@@ -140,7 +177,11 @@ const TransactionListPage = (props) => {
                 </View>
             </Modal>
             <FlatList            
-                data={ searchQuery.length==0 ? data1 : filterData}
+                //search ? moviesBySearch : props.route.params ?
+                //props.route.params.movies : moviesByCategory
+
+                //searchQuery.length==0 ? data1 : filterData.length != 0 ? filterData :sortData
+                data={searchQuery? filterData : index==0 ? data1 : sortData}
                 keyExtractor={key=>key.id}
                 renderItem={handleRenderItem}
                 
@@ -172,3 +213,6 @@ const styles = StyleSheet.create({
 })
 
 export default TransactionListPage
+
+
+
