@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux'
-import UserAuthReducers from './UserAuthReducers'
-import UserRegisterReducers from './UserRegisterReducers'
-import UserIdReducers from './UserIdReducer'
-import AdminAuthReducers from './AdminAuthReducers'
+
+import GetTransansactionsReducers from './GetTransansactionsReducers'
 
 const rootReducers  = combineReducers
-({UserAuthReducers,UserRegisterReducers, AdminAuthReducers})
+({GetTransansactionsReducers})
 console.log('root reducer')
 
 export default rootReducers
