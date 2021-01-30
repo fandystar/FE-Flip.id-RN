@@ -1,8 +1,8 @@
-import { Searchbar } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper'
 import React,{ useState,useEffect } from 'react'
 import { Modal,FlatList, Text,TouchableOpacity,View,StyleSheet} from 'react-native'
 import Axios from 'axios'
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler'
 import RadioForm from 'react-native-simple-radio-button'
 //import CardComponent from '../Components/CardComponent'
 
@@ -15,7 +15,7 @@ const TransactionListPage = (props) => {
     const[sortData,SetSortData] = useState([])
     const[type,setType] = useState('')
     
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('')
     const [filterData,setFilterData] =useState([])
     const [modalVisible,setModalVisible]=useState(false)
     let radio_props = [
@@ -24,7 +24,7 @@ const TransactionListPage = (props) => {
         {label: 'Nama Z-A', value: 2 },
         {label: 'Tanggal Terbaru', value: 3 },
         {label: 'Tanggal Terlama', value: 4 }
-    ];
+    ]
     
     const handleSortData =(value) =>{
         //alert('indek : '+value)
@@ -32,40 +32,42 @@ const TransactionListPage = (props) => {
             // A-Z
             let test=data1.sort((a,b)=>(a.beneficiary_name>b.beneficiary_name)? 1 : (b.beneficiary_name>a.beneficiary_name)? -1 :0 )
             SetSortData(test)
-        } else if (value===2) {
+        } else if (value==2) {
             // Z-A
             let test=data1.sort((a,b)=>(b.beneficiary_name>a.beneficiary_name)? 1 : (a.beneficiary_name>b.beneficiary_name)? -1 :0 )
             SetSortData(test)
-        } else if (value===3) {
+        } else if (value==3) {
             // newest date
             let newDate = [...data1]
             newDate.sort(function(a, b) {
                 a = new Date(a.created_at)
                 b = new Date(b.created_at)
                 return b>a ? 1 : b<a ? -1 : 0
-            });
+            })
             SetSortData(newDate)
-        } else if (value === 4) {
+        } else if (value == 4) {
             // oldest date
             let oldDate=[...data1]
             oldDate.sort(function(a, b) {
                 a = new Date(a.created_at)
                 b = new Date(b.created_at)
                 return a>b ? 1 : a<b? -1 : 0
-            });
-          
-            SetSortData(oldDate)
+            })
+            let data2 = []
+            for (let k=oldDate.length-1;k>=0;k=k-1){
+                 data2.push(oldDate[k])   
+            }
+            SetSortData(data2)
         } else {
             SetSortData(data1)
         }
     }
     // fungsi
     const onChangeSearch = query => {
-        setSearchQuery(query);
+        setSearchQuery(query)
         if(query == '') { 
             setFilterData(data1) 
         } else {
-            //const filterData = data1.filter(datum => datum.amount.toString().includes(query.toString())?datum:null)
             let filterAmount = data1.filter( datum => String(datum.amount).includes(query))
             
             let filterName = data1.filter( datum => datum.beneficiary_bank.toLowerCase().includes(query.toLowerCase()))
@@ -103,7 +105,7 @@ const TransactionListPage = (props) => {
 
     const currencyFormat = (item) => {
         return 'Rp ' + item.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-    };
+    }
     
     const dateFormat =(item) =>{
         let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']

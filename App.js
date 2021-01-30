@@ -34,20 +34,15 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Test">
-        
-        
-        <Stack.Screen name="Detail" component={DetailPage}/>
-        <Stack.Screen name="Card" component={CardComponent}/>
-         <Stack.Screen name="Transaction" component={TransactionListPage}/>
-        <Stack.Screen name="Test" component={Testing}/>
-       
-      
-      
+          <Stack.Screen name="Detail" component={DetailPage}/>
+          <Stack.Screen name="Card" component={CardComponent}/>
+          <Stack.Screen name="Transaction" component={TransactionListPage}/>
+          <Stack.Screen name="Test" component={Testing}/>
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
+  )
+}
 
 
-export default App;
+export default App
 
