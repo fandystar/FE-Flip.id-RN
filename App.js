@@ -29,7 +29,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Card">
+      <Stack.Navigator initialRouteName="Transaction">
         
         
         <Stack.Screen name="Detail" component={DetailPage}/>

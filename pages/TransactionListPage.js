@@ -1,17 +1,25 @@
 import { Searchbar } from 'react-native-paper';
 import React,{ useState,useEffect } from 'react'
-import { Modal,FlatList, Text,TouchableOpacity,View} from 'react-native'
+import { Modal,FlatList, Text,TouchableOpacity,View,StyleSheet} from 'react-native'
 import Axios from 'axios'
 import { ScrollView } from 'react-native-gesture-handler';
+import RadioForm from 'react-native-simple-radio-button'
 //import CardComponent from '../Components/CardComponent'
 
 //data{props.data[id].beneficiary_bank}
 const TransactionListPage = (props) => {
-    
+    const [index,setIndex] = useState(0)
     const[data,setData]=useState([])
     const [searchQuery, setSearchQuery] = useState('');
     const [filterData,setFilterData] =useState([])
-    
+    const [modalVisible,setModalVisible]=useState(false)
+    let radio_props = [
+        {label: 'URUTKAN', value: 0 },
+        {label: 'Nama A-Z', value: 1 },
+        {label: 'Nama Z-A', value: 2 },
+        {label: 'Tanggal Terbaru', value: 3 },
+        {label: 'Tanggal Terlama', value: 4 }
+    ];
     
     
     // fungsi
@@ -99,7 +107,31 @@ const TransactionListPage = (props) => {
                         style={{ width: '100%', height:40,marginHorizontal:5  }}
                         value={searchQuery}
             />
-              
+            <TouchableOpacity
+                onPress={()=>setModalVisible(true)}
+            >
+                <Text>{ index==0 ? 'URUTKAN' : radio_props[index.value].label}</Text>     
+            </TouchableOpacity>
+             <Modal
+                transparent={true}
+                visible={modalVisible}
+                animationType='fade'
+            
+            >
+                <View style = {styles.ViewScreen}>
+                    <View style ={styles.viewModal} >
+                    <RadioForm
+                            radio_props={radio_props}
+                            initial={index==0? 0 :radio_props[index.value].value}
+                            onPress={(value) => { 
+                                                setIndex({value:value})
+                                                setModalVisible(!modalVisible)
+                                   }}           
+                    />            
+                   
+                    </View>
+                </View>
+            </Modal>
             <FlatList            
                 data={ searchQuery.length==0 ? data1 : filterData}
                 keyExtractor={key=>key.id}
@@ -110,5 +142,26 @@ const TransactionListPage = (props) => {
         </View>
     )
 }
+const styles = StyleSheet.create({
+    ViewScreen :{
+        alignItems :'center',
+        //backgroundColor :'gray',
+        justifyContent:'flex-start',
+        flex:1,
+    },
+    viewModal : {
+        //flex :1,
+        marginTop : 200,
+        width :300,
+        height :300,
+        borderRadius :10,
+        justifyContent:'center',
+        alignItems:'flex-start',
+        //borderBottomWidth:2,
+       // padding : 135,
+        backgroundColor : '#CAD3C8'
+    },
+    
+})
 
 export default TransactionListPage

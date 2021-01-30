@@ -16,21 +16,15 @@ const CardComponent = () => {
         {label: 'Nama Z-A', value: 2 },
         {label: 'Tanggal Terbaru', value: 3 },
         {label: 'Tanggal Terlama', value: 4 }
-    
-    
     ];
-      //console.log('index : ',index)
-      //console.log('nilai index : ',index.value)
-      //console.log('nilai label : ',radio_props[index.value].label)
-      
-      
+    
       return (
         
         <View>
             <TouchableOpacity
                 onPress={()=>setModalVisible(true)}
             >
-                <Text>{radio_props[index.value].label}</Text>     
+                <Text>{ index==0 ? 'URUTKAN' : radio_props[index.value].label}</Text>     
             </TouchableOpacity>
             
             <Modal
@@ -43,7 +37,7 @@ const CardComponent = () => {
                     <View style ={styles.viewModal} >
                     <RadioForm
                             radio_props={radio_props}
-                            initial={radio_props[index.value].value}
+                            initial={index==0? 0 :radio_props[index.value].value}
                             onPress={(value) => { 
                                                 setIndex({value:value})
                                                 setModalVisible(!modalVisible)
