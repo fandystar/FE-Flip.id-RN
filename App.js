@@ -20,6 +20,10 @@ const  Testing = (props) => {
       title='Detail'
       onPress={() => props.navigation.navigate('Detail')}
     />
+      <Button
+      title='Others'
+      onPress={() => props.navigation.navigate('Card')}
+    />
   </View>
   )
 }
@@ -29,7 +33,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Transaction">
+      <Stack.Navigator initialRouteName="Test">
         
         
         <Stack.Screen name="Detail" component={DetailPage}/>

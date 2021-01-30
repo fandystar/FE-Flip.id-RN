@@ -100,18 +100,25 @@ const TransactionListPage = (props) => {
     return (
         <View style={{marginTop:10}}>
             <ScrollView>
-            <Searchbar
+            <View style={{position:'relative',zIndex:0}} >
+            <View style={{position:'relative',zIndex:0}} >
+                    <Searchbar
                         icon={require('../sample/loupe.png')}
                         placeholder="cari nama,bank atau nominal"
                         onChangeText={onChangeSearch}
                         style={{ width: '100%', height:40,marginHorizontal:5  }}
                         value={searchQuery}
-            />
-            <TouchableOpacity
-                onPress={()=>setModalVisible(true)}
-            >
-                <Text>{ index==0 ? 'URUTKAN' : radio_props[index.value].label}</Text>     
-            </TouchableOpacity>
+                        />
+                </View>
+                <View style={{position:'absolute',top:0,
+                                left:300,zIndex:1}} >
+                    <TouchableOpacity
+                         onPress={()=>setModalVisible(true)}
+                    >
+                        <Text style={{fontWeight:'bold',color:'#c0392b',height:40,fontSize:15,marginTop:7}}>{ index==0 ? 'URUTKAN' : radio_props[index.value].label} ▼</Text>     
+                    </TouchableOpacity>
+                </View>
+            </View>
              <Modal
                 transparent={true}
                 visible={modalVisible}

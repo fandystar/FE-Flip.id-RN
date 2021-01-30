@@ -41,7 +41,7 @@ const DetailPage = (props) => {
                 <TouchableOpacity
                     onPress={()=>props.navigation.goBack()}
                     >
-                    <Text style={{fontSize:15,color:'orange',fontWeight:'bold'}}>Tutup</Text>
+                    <Text style={{fontSize:15,color:'#c0392b',fontWeight:'bold'}}>Tutup</Text>
                 </TouchableOpacity>
             </View>  
             <Text style={styles.line}> </Text>
