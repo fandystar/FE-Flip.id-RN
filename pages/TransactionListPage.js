@@ -4,20 +4,23 @@ import { Modal,FlatList, Text,TouchableOpacity,View,StyleSheet} from 'react-nati
 import Axios from 'axios'
 import { ScrollView } from 'react-native-gesture-handler'
 import RadioForm from 'react-native-simple-radio-button'
-//import CardComponent from '../Components/CardComponent'
+import {currencyFormat,dateFormat} from '../utils/helper'
+//import {useSelector} from 'react-redux'
+//import {getData} from '../Redux/actions/GetTransactions'
 
-//data{props.data[id].beneficiary_bank}
+
 const TransactionListPage = (props) => {
     const [index,setIndex] = useState(0)
     const[data,setData]=useState([])
-    //const[data1,setData1]=useState([])
-    
     const[sortData,SetSortData] = useState([])
-    const[type,setType] = useState('')
-    
     const [searchQuery, setSearchQuery] = useState('')
     const [filterData,setFilterData] =useState([])
     const [modalVisible,setModalVisible]=useState(false)
+      
+    
+   //const transactions = useSelector((state) => state.GetTransansactionsReducers.transactions)
+    
+
     let radio_props = [
         {label: 'URUTKAN', value: 0 },
         {label: 'Nama A-Z', value: 1 },
@@ -95,45 +98,47 @@ const TransactionListPage = (props) => {
     
     //  duplikasi data
     let data1=[]
+    
     for ( let id in data) {
             data1.push((data[id]))
     } 
+   
     
     useEffect(() => {
+        //dispatch(getData())
         getData()
     }, [])
 
-    const currencyFormat = (item) => {
-        return 'Rp ' + item.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-    }
-    
-    const dateFormat =(item) =>{
-        let months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']
-        let day= item[8]+item[9]
-        let year=item[0]+item[1]+item[2]+item[3]
-        let m= parseInt(item[5]+item[6])-1
-        let month =months[m]
-        return day+' '+month+' '+year    
-    }
+  
     
     const handleRenderItem =({item}) =>{
+        
+        const backgroundColor = item.status === 'SUCCESS' ? "#10ac84" : "white"
+        const color = item.status === 'SUCCESS' ? "white" : "black"
+        const borderWidth = item.status === 'SUCCESS' ? 0 : 2
+        const borderColor = item.status === 'SUCCESS' ? "#10ac84" : "orange"
+        const bc  =  item.status === 'SUCCESS' ? "#10ac84" : "orange"
+             
+        //console.log('bank : ',item.beneficiary_bank)
+        //console.log('kapital huruf pertama : ',item.beneficiary_bank[0]
+        
         return (
             <View style={{marginHorizontal:10}}>
-                <View style={{borderRadius:5}}>
+                <View >
                     <TouchableOpacity 
-                        style={{backgroundColor:'white',marginTop:7}}
+                        style={{borderRadius:10,backgroundColor:'white',marginTop:7,borderLeftWidth:10,borderColor:bc}}
                         onPress={()=>props.navigation.navigate('Detail',{data:item})}
                         
                         >
                         <View style={{flexDirection:'row'}}>
                             <View style={{flex:10,marginHorizontal:20}} >
-                                <Text style={{fontSize:20,fontWeight:'bold'}}>{item.sender_bank} ➜ {item.beneficiary_bank}</Text>
+                                <Text style={{marginTop:20,fontSize:20,fontWeight:'bold'}}>{item.sender_bank.toUpperCase()} ➜ {item.beneficiary_bank==='mandiri'? 'Mandiri':  item.beneficiary_bank==='muamalat' ? 'Muamalat' : item.beneficiary_bank.toUpperCase()}</Text>
                                 <Text style={{fontSize:20}}>{item.beneficiary_name}</Text>
-                                <Text style={{fontSize:15}}>{currencyFormat(item.amount)} ● {dateFormat(item.created_at)}</Text>
+                                <Text style={{fontSize:15,marginBottom:20}}>{currencyFormat(item.amount)} ● {dateFormat(item.created_at)}</Text>
                             </View>
                             <View style={{flex:4}}>
-                                <TouchableOpacity style={styles.cssTouchableOpacity}>
-                                    <Text style={styles.cssText}>{item.status}</Text>
+                                <TouchableOpacity style={[styles.cssTouchableOpacity,{backgroundColor,borderColor,borderWidth}]}>
+                                    <Text style={[styles.cssText,{color}]}>{item.status}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -222,15 +227,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent : 'center',
         //color :'white',
-        backgroundColor: '#10ac84',
+       // backgroundColor: '',
         marginRight : 4,
-        marginTop : 10,
+        marginTop : 40,
         marginBottom: 10,             
-     },
+        //borderWidth:2,
+        //borderColor:'orange'
+       
+        // borderStyle:'solid',
+       // borderColor : 'orange'
+    },
     cssText : {
         fontWeight :'bold',
         color :'white',
-        fontSize: 12, }
+        fontSize: 14, }
 
 })
 

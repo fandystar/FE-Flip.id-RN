@@ -2,14 +2,13 @@ import Axios from 'axios'
 import * as types from '../constants/actionTypes'
 import {BASE_URL} from '../constants/general'
 
-console.log('action 0')
 export const getRequest = () =>({
     type : types.GET_REQUEST
 })
 
 export const getSuccess = (data) =>({
     type : types.GET_SUCCESS,
-    dataAction : data    
+    payload : data    
   })
 
 export const getFailure = (error) =>({
@@ -18,24 +17,28 @@ export const getFailure = (error) =>({
 
 })
 
-export const getUserId = () =>{
+export function getData() {
     
     return async(dispatch) => {
         
         try{
           
-            dispatch( getRequest() )
+            dispatch(getRequest())
             const response = await Axios.get
-            ( BASE_URL)    
-          
-            dispatch(getSuccess(response))
-            return true
+            (BASE_URL)    
+            let transactions=[]
+            for ( let id in response.data) {
+                transactions.push((response.data[id]))
+            } 
+            console.log('transaksi : ',transactions)
+            dispatch(getSuccess(transactions))
+            //return true
           
                       
         }
 
         catch (error) { dispatch (getFailure(error)) 
-            return false
+            //return false
            
         }
     }
