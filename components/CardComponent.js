@@ -10,6 +10,8 @@ import RadioForm from 'react-native-simple-radio-button'
 const TransactionListPage = (props) => {
     const [index,setIndex] = useState(0)
     const[data,setData]=useState([])
+    const[data1,setData1]=useState([])
+    
     const[sortData,SetSortData] = useState([])
     const[type,setType] = useState('')
     
@@ -65,8 +67,11 @@ const TransactionListPage = (props) => {
     const getData = async() =>{
             const r = await Axios.get('https://nextar.flip.id/frontend-test')
             setData(r.data) 
-        
-           
+            //let data1=[]
+            for ( let id in data) {
+                    data1.push((data[id]))
+            } 
+            setData1(data1)
                
     }    
     
@@ -77,10 +82,8 @@ const TransactionListPage = (props) => {
     }, [])
 
     //console.log('data flip : ',data)                
-    let data1=[]
-    for ( let id in data) {
-        data1.push((data[id]))
-    } 
+    
+    //setData1(data2)
     //console.log('data 1 : ',data1)
     
     const currencyFormat = (num) => {
@@ -156,8 +159,11 @@ const TransactionListPage = (props) => {
                 </View>
             </Modal>
             <FlatList            
+                //search ? moviesBySearch : props.route.params ?
+                //props.route.params.movies : moviesByCategory
+
                 //searchQuery.length==0 ? data1 : filterData.length != 0 ? filterData :sortData
-                data={sortData}
+                data={searchQuery? filterData : index==0 ? data1 : sortData}
                 keyExtractor={key=>key.id}
                 renderItem={handleRenderItem}
                 
