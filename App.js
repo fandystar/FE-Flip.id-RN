@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text,Picker ,Button} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import CardComponent from './Components/CardComponent';
+import CardComponent from './components/CardComponent';
 import DetailPage from './pages/DetailPage';
 import TransactionListPage from './pages/TransactionListPage';
 
@@ -29,7 +29,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Test">
+      <Stack.Navigator initialRouteName="Card">
         
         
         <Stack.Screen name="Detail" component={DetailPage}/>

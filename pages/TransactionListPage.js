@@ -93,7 +93,7 @@ const TransactionListPage = (props) => {
         <View style={{marginTop:10}}>
             <ScrollView>
             <Searchbar
-                        icon={require('../Sample/loupe.png')}
+                        icon={require('../sample/loupe.png')}
                         placeholder="cari nama,bank atau nominal"
                         onChangeText={onChangeSearch}
                         style={{ width: '100%', height:40,marginHorizontal:5  }}

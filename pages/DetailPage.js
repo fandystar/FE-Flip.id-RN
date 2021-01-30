@@ -16,11 +16,19 @@ const DetailPage = (props) => {
 
     var tahun = (_tahun < 1000) ? _tahun + 1900 : _tahun;
     let tggl=props.route.params.data.created_at
-    console.log(tggl.split(' '))
+    console.log(props.route.params.data.created_at)
+    console.log('tanggal : ',props.route.params.data.created_at[8]+props.route.params.data.created_at[9])
+    console.log('bulan : ',props.route.params.data.created_at[5]+props.route.params.data.created_at[6])
+
+    
+    //let bulan_ = (parseInt(props.route.params.data.created_at[0][5]+props.route.params.data.created_at[0][6])-1)
+    //console.log(bulan[bulan_])
+    
+    
+    //console.log(tggl.split(' '))
     //alert(tggl.split(''))
     
     //console.log(hari + ', ' + tanggal + ' ' + bulan + ' ' + tahun);
-    //alert(hari + ', ' + tanggal + ' ' + bulan + ' ' + tahun)    
         
     
     
